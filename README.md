@@ -49,18 +49,26 @@ _**Setup Kube Kind Cluster and Namespace**_
 
 - It would also start --
         
-        - Confluent Zookeeper
+       - Confluent Zookeeper
         
-        - Confluent Kafka
+       - Confluent Kafka
         
-        - Yahoo Kafka-Manager
+       - Yahoo Kafka-Manager
 
 - It would also print the **LONG Security Token** on the Console for K8Dash UI Login
 
 
 - Once the Command exits with success,
-     
-    - You can Browse your K8Dash UI on --> 
+
+
+   - You can Access Kafka-Manager on  
+    
+        http://localhost:9000/
+        
+        - Add New Kafka Cluster via UI using "10.102.211.221:2181"
+        
+      
+   - You can Browse your K8Dash UI on --> 
     
         - Copy the **LONG Security Token** displayed on the Console by the last command and use it to Login on K8Dash UI 
     
@@ -74,9 +82,9 @@ _**Setup Kube Kind Cluster and Namespace**_
         
             `./fetchKubeLandK8DashAccessKey.sh`
 
-    - Now, You should be able to execute any **kubectl** Commands
+   - Now, You should be able to execute any **kubectl** Commands
 
-    - To Check your Local Kubernetes Cluster,
+   - To Check your Local Kubernetes Cluster,
     
         `kubectl get nodes`
     
