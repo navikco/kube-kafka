@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-green-zookeeper
+  namespace: kube-green
+spec:
+  type: ClusterIP
+  selector:
+    app: kube-green-zookeeper
+  ports:
+  - port: 2181
+    name: client
+  clusterIP: 10.102.211.221

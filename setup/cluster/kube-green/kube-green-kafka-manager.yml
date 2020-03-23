@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-green-kafka-manager
+  namespace: kube-green
+  labels:
+    app: kube-green-kafka-manager
+    purpose: kube-green-kafka-manager-containers
+  annotations:
+    version: 'latest'
+spec:
+  selector:
+    matchLabels:
+      app: kube-green-kafka-manager
+  template:
+    spec:
+      containers:
+      - image: sheepkiller/kafka-manager:latest
+        imagePullPolicy: Always
+        name: kube-green-kafka-manager
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+          name: kube-port
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "250m"
+          limits:
+            memory: "1000Mi"
+            cpu: "1"
+        env:
+        - name: ZK_HOSTS
+          value: "10.102.211.221:2181"
+        - name: KAFKA_MANAGER_AUTH_ENABLED
+          value: "true"
+        - name: KAFKA_MANAGER_USERNAME
+          value: "ewsadmin"
+        - name: KAFKA_MANAGER_PASSWORD
+          value: "welcome1"
+      restartPolicy: Always
+    metadata:
+      labels:
+        app: kube-green-kafka-manager
+  replicas: 1

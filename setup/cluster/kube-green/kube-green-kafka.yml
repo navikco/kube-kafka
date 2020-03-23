@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-green-kafka
+  namespace: kube-green
+  labels:
+    app: kube-green-kafka
+    purpose: kube-green-kafka-containers
+  annotations:
+    version: '5.3.1'
+spec:
+  selector:
+    matchLabels:
+      app: kube-green-kafka
+  template:
+    spec:
+      containers:
+      - image: confluentinc/cp-kafka:5.3.1
+        imagePullPolicy: Always
+        name: kube-green-kafka
+        ports:
+        - containerPort: 9092
+          protocol: TCP
+          name: kube-port
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "250m"
+          limits:
+            memory: "1000Mi"
+            cpu: "1"
+        env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "10.102.211.221:2181"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://localhost:9092"
+        - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+          value: "1"
+#        - name: KAFKA_JMX_OPTS
+#          value: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9192"
+#        command:
+#        - sh
+#        - -c
+#        - "export KAFKA_ZOOKEEPER_CONNECT=10.102.211.221:2181 && KAFKA_ADVERTISED_PORT=9092 && export KAFKA_ADVERTISED_HOST_NAME=$(hostname) && /usr/bin/kafka-server-start /etc/kafka/server.properties"
+      restartPolicy: Always
+    metadata:
+      labels:
+        app: kube-green-kafka
+  replicas: 1
+
+#	advertised.host.name = null
+#	advertised.listeners = null
+#	advertised.port = null
+#	zookeeper.connect=

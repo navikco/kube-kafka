@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-green-zookeeper
+  namespace: kube-green
+  labels:
+    app: kube-green-zookeeper
+    purpose: kube-green-zookeeper-containers
+  annotations:
+    version: '5.3.1'
+spec:
+  selector:
+    matchLabels:
+      app: kube-green-zookeeper
+  template:
+    spec:
+      containers:
+      - image: confluentinc/cp-zookeeper:5.3.1
+        imagePullPolicy: Always
+        name: kube-green-zookeeper
+        ports:
+        - containerPort: 2181
+          protocol: TCP
+          name: kube-port
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "250m"
+          limits:
+            memory: "1000Mi"
+            cpu: "1"
+        env:
+        - name: ZOOKEEPER_CLIENT_PORT
+          value: "2181"
+      restartPolicy: Always
+    metadata:
+      labels:
+        app: kube-green-zookeeper
+  replicas: 1
