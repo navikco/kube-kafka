@@ -24,9 +24,6 @@ ls -R ${KAFKA_CLUSTERS_HOME}/
 
 cd ${KAFKA_CLUSTERS_HOME}/
 
-# Destroy EMBS EFK for Logging
-# ----------------------------
-
 echo "DESTROYING Namespace :::>>> [[[ kube-${ENVIRONMENT} ]]]..."
 
 kubectl delete -f kube-${ENVIRONMENT}.yml | true
